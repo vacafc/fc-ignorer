@@ -1,0 +1,29 @@
+{
+    "manifest_version": 2,
+    "name": "Ignorador Forocoches",
+    "version": "1.0",
+    "description": "Ignora, definitivamente, a los usuarios que desees.",
+    "icons": {
+        "16": "images/icon16.png",
+        "48": "images/icon48.png",
+        "128": "images/icon128.png"
+    },
+    "browser_action": {
+        "default_icon": {
+            "16": "images/icon16.png",
+            "24": "images/icon24.png",
+            "32": "images/icon32.png"
+        },
+        "default_title": "Ignorador Forocoches",
+        "default_popup": "html/menu.html"
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://*.forocoches.com/*"],
+            "js": ["js/ignorer.js"]
+        }
+    ],
+    "permissions": [
+        "storage"
+    ]
+}
