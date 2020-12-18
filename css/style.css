@@ -3,8 +3,3 @@ body, textarea {
   font-size: small;
   line-height: 1.25em;
 }
-
-textarea {
-  box-sizing: border-box;
-  width: 100%;
-}
