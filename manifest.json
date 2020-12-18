@@ -17,15 +17,9 @@
         "default_title": "Ignorador Forocoches",
         "default_popup": "html/menu.html"
     },
-    "content_scripts": [
-        {
-            "matches": ["*://*.forocoches.com/*"],
-            "js": ["js/loader.js"],
-            "run_at": "document_end"
-        }
-    ],
-    "permissions": [
-        "storage"
-    ],
+    "background": {
+      "page": "html/ignorer-wrapper.html"
+    },
+    "permissions": ["storage", "webNavigation", "tabs", "*://*.forocoches.com/*"],
     "web_accessible_resources": ["js/ignorer.js", "js/storage.js"]
 }
