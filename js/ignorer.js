@@ -6,32 +6,52 @@ const browser = chrome || browser;
 const ignoreUsers = () => {
   const users = new Set(PLACEHOLDER);
   
-  const mainList = document.querySelectorAll('[id^="threadbits_forum_"]')[0];
-  if (mainList) {
-    const threads = [...mainList.children];
-    threads.forEach(thread => {
-      const author = thread.children[2].children[1].innerText.trim();
-      if (users.has(author)) {
-        thread.remove();
-      }
-    });
-  } else {
-    const postsList = document.getElementById('posts');
-    if (postsList) {
-      const posts = [...postsList.children];
-      posts.forEach(post => {
-        const author = post.getElementsByClassName('bigusername')[0].innerText.trim();
-        if (users.has(author)) {
-          post.remove();
-        }
-      });
+  const obtainThreadAuthor = domElement => {
+    try {
+      return domElement.children[2].children[1].innerText.trim();
+    } catch {
+      return null;
     }
-  }
+  };
+  
+  const obtainPostAuthor = domElement => {
+    try {
+      return domElement.getElementsByClassName('bigusername')[0].innerText.trim();
+    } catch {
+      return null;
+    }
+  };
+
+  const obtainIngoredPostAuthor = domElement => {
+    try {
+      return domElement.getElementsByTagName('tbody')[0].getElementsByTagName('a')[2].innerText;
+    } catch {
+      return null;
+    }
+  };
+
+  const obtainAuthor = domElement => {
+    return obtainThreadAuthor(domElement) || obtainPostAuthor(domElement) || obtainIngoredPostAuthor(domElement) || null;
+  };
+  
+  const attemptRemoval = (ignoredUsers, domElement, author) => {
+    if (ignoredUsers.has(author)) {
+      domElement.remove();
+    }
+  };
+
+  const publicationsDom = document.querySelectorAll('[id^="threadbits_forum_"]')[0]
+      || document.getElementById('posts')
+      || { children: [] };
+  const publications = [...publicationsDom.children];
+  publications.forEach(publication => {
+    const author = obtainAuthor(publication);
+    attemptRemoval(users, publication, author);
+  });
 };
 
 browser.webNavigation.onCompleted.addListener(() => {
   loadIgnored(users => {
-    users.push('Udezehcnas');
     browser.tabs.executeScript({
       code: `(${ignoreUsers.toString().replace('PLACEHOLDER', JSON.stringify(users))})()`
     });
