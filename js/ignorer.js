@@ -4,7 +4,7 @@ const PLACEHOLDER = 'ignore this value';
 const browser = chrome || browser;
 
 const ignoreUsers = () => {
-  const users = new Set(PLACEHOLDER);
+  const ignoredUsers = new Set(PLACEHOLDER);
   
   const obtainThreadAuthor = domElement => {
     try {
@@ -31,13 +31,10 @@ const ignoreUsers = () => {
   };
 
   const obtainAuthor = domElement => {
-    return obtainThreadAuthor(domElement) || obtainPostAuthor(domElement) || obtainIngoredPostAuthor(domElement) || null;
-  };
-  
-  const attemptRemoval = (ignoredUsers, domElement, author) => {
-    if (ignoredUsers.has(author)) {
-      domElement.remove();
-    }
+    return obtainThreadAuthor(domElement)
+        || obtainPostAuthor(domElement)
+        || obtainIngoredPostAuthor(domElement)
+        || null;
   };
 
   const publicationsDom = document.querySelectorAll('[id^="threadbits_forum_"]')[0]
@@ -46,7 +43,9 @@ const ignoreUsers = () => {
   const publications = [...publicationsDom.children];
   publications.forEach(publication => {
     const author = obtainAuthor(publication);
-    attemptRemoval(users, publication, author);
+    if (author && ignoredUsers.has(author)) {
+      publication.remove();
+    }
   });
 };
 
