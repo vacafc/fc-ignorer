@@ -1,7 +1,7 @@
 const browser = chrome || browser;
 
 const saveIgnored = users => {
-  browser.storage.local.set({ignoredUsers: Array.from(users)});
+  browser.storage.local.set({ignoredUsers: users});
 };
   
 const loadIgnored = callback => {

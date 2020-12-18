@@ -4,9 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const users = document.getElementById('txt-users');
   users.addEventListener('input', onUsersChanged);
   loadIgnored(ignoredUsers => {
-    users.value = Array.from(ignoredUsers).join('\n');
+    users.value = ignoredUsers.join('\n');
   });
-});  
+});
 
 const onUsersChanged = () => {
   const usersTextArea = document.getElementById('txt-users');
