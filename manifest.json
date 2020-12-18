@@ -20,10 +20,12 @@
     "content_scripts": [
         {
             "matches": ["*://*.forocoches.com/*"],
-            "js": ["js/ignorer.js"]
+            "js": ["js/loader.js"],
+            "run_at": "document_end"
         }
     ],
     "permissions": [
         "storage"
-    ]
+    ],
+    "web_accessible_resources": ["js/ignorer.js", "js/storage.js"]
 }
