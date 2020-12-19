@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Ignorador Forocoches",
-    "version": "1.0",
+    "version": "1.0.1",
     "description": "Ignora, definitivamente, a los usuarios que desees.",
     "icons": {
         "16": "images/icon16.png",
