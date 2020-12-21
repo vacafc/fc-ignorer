@@ -4,10 +4,12 @@ const saveIgnored = users => {
   browser.storage.local.set({ignoredUsers: users});
 };
   
-const loadIgnored = callback => {
+const loadIgnored = (ok, err) => {
   browser.storage.local.get('ignoredUsers', result => {
     if (result.ignoredUsers) {
-      callback(result.ignoredUsers);
+      ok(result.ignoredUsers);
+    } else {
+      err();
     }
   });
 };

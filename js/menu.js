@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
   users.addEventListener('input', onUsersChanged);
   loadIgnored(ignoredUsers => {
     users.value = ignoredUsers.join('\n');
+  }, () => {
+    users.value = '';
   });
 });
 
