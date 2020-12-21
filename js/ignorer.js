@@ -50,7 +50,7 @@ const ignoreUsers = () => {
 };
 
 browser.webNavigation.onCompleted.addListener(() => {
-  loadIgnored(users => {
+  loadIgnored().then(users => {
     browser.tabs.executeScript({
       code: `(${ignoreUsers.toString().replace('PLACEHOLDER', JSON.stringify(users))})()`
     });

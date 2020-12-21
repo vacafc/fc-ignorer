@@ -3,11 +3,9 @@ import { saveIgnored, loadIgnored } from './storage.js';
 document.addEventListener('DOMContentLoaded', () => {
   const users = document.getElementById('txt-users');
   users.addEventListener('input', onUsersChanged);
-  loadIgnored(ignoredUsers => {
-    users.value = ignoredUsers.join('\n');
-  }, () => {
-    users.value = '';
-  });
+  loadIgnored()
+      .then(ignoredUsers => users.value = ignoredUsers.join('\n'))
+      .catch(() => users.value = '');
 });
 
 const onUsersChanged = () => {
